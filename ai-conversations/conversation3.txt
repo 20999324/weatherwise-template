@@ -1,1 +1,16 @@
+Me:
+My parse_weather_question() function works, but it keeps extracting too much text after the word “in.” For example, “What’s the weather in Melbourne over the next 3 days?” gives “Melbourne over the next 3 days” instead of just “Melbourne.” Help?
+
+AI:
+You're right — your regex is too greedy. It's matching everything after “in.” Try using a non-greedy match and tell it to stop at time-related keywords like “today,” “tomorrow,” or “next.”
+
+Me:
+Okay, what’s the updated regex?
+AI:
+Try this:
+match = re.search(r"in\s+([a-zA-Z\s]+?)(?:\s+(?:today|tomorrow|over|for|next|this|on))?", question)
+This captures everything after “in” up until it sees a time-related word. It’s also non-greedy, thanks to +?.
+
+Me:
+I tested it. It now returns just “Melbourne.” That fixed it. Thanks!
 
