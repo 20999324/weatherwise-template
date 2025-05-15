@@ -1,1 +1,25 @@
+Me:
+I asked for a menu using pyinputplus and the AI gave me a version that didn’t loop — it just ran once and ended. I need a version that keeps looping until “Exit” is chosen.
 
+AI:
+That’s a good catch. You need a while True: loop with an inputMenu() inside it. Here’s the fixed version:
+
+python
+Copy
+Edit
+def main_menu():
+    import pyinputplus as pyip
+    while True:
+        choice = pyip.inputMenu(['Ask a Weather Question', 'Show Temperature Chart', 'Show Precipitation Chart', 'Exit'],
+                                numbered=True, prompt="\nWhat would you like to do?\n")
+        if choice == 'Ask a Weather Question':
+            ask_weather_question()
+        elif choice == 'Show Temperature Chart':
+            ...
+        elif choice == 'Show Precipitation Chart':
+            ...
+        elif choice == 'Exit':
+            print("Goodbye!")
+            break
+Me:
+Much better. Now it loops properly. I’ll plug in my functions inside each branch.
