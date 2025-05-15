@@ -1,1 +1,32 @@
+Me:
+I need to build a get_weather_data(location, forecast_days=5) function for a Python weather advisor app. I want to use the wttr.in API since it returns JSON and doesn’t need an API key. Can you help me outline the function?
 
+AI:
+Sure! Use requests.get() to call https://wttr.in/{location}?format=j1. Then access ["current_condition"] and ["weather"] to extract current data and multi-day forecasts.
+
+Me:
+What if the city is invalid, or the API is down?
+
+AI:
+Wrap the request in a try/except block using requests.exceptions.RequestException. You should also validate forecast_days to be between 1 and 5 and use .get() on JSON keys.
+
+Me:
+Good idea. Can you add all that and make it return a dictionary with "location", "current", and "forecast"?
+
+AI:
+def get_weather_data(location, forecast_days=5):
+    import requests
+    if forecast_days < 1 or forecast_days > 5:
+        raise ValueError("Forecast days must be between 1 and 5.")
+    try:
+        url = f"https://wttr.in/{location}?format=j1"
+        response = requests.get(url)
+        response.raise_for_status()
+        data = response.json()
+        current = data.get("current_condition", [{}])[0]
+        forecast = data.get("weather", [])[:forecast_days]
+        return {"location": location, "current": current, "forecast": forecast}
+    except requests.exceptions.RequestException as e:
+        return {"error": f"Failed to retrieve data: {e}"}
+Me:
+That works perfectly — thanks!
