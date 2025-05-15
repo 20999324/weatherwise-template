@@ -1,1 +1,39 @@
+Me:
+I want to create a line chart of daily high/low temperatures from the forecast. I’m using matplotlib. How should I structure this?
+
+AI:
+You can loop through your forecast list and extract:
+
+day["date"]
+
+day["maxtempC"]
+
+day["mintempC"]
+
+Then use ax.plot() to draw the two lines.
+
+Me:
+Can you give me a reusable function?
+
+AI:
+Sure:def create_temperature_visualisation(weather_data, output_type='display'):
+    import matplotlib.pyplot as plt
+    forecast = weather_data.get("forecast", [])
+    dates = [day["date"] for day in forecast]
+    max_temps = [int(day["maxtempC"]) for day in forecast]
+    min_temps = [int(day["mintempC"]) for day in forecast]
+    fig, ax = plt.subplots()
+    ax.plot(dates, max_temps, label="Max Temp", color="red", marker="o")
+    ax.plot(dates, min_temps, label="Min Temp", color="blue", marker="o")
+    ax.set_title(f"Temperature Forecast for {weather_data.get('location', 'Unknown')}")
+    ax.set_ylabel("°C")
+    ax.set_xlabel("Date")
+    ax.legend()
+    plt.tight_layout()
+    if output_type == 'figure':
+        return fig
+    else:
+        plt.show()
+Me:
+This works great. I’ll reuse the same structure for precipitation. Thanks!
 
